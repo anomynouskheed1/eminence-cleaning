@@ -1,0 +1,41 @@
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+:root {
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body: "Manrope", sans-serif;
+}
+
+@layer base {
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-heading text-eminence-black;
+  }
+
+  body {
+    @apply font-body text-eminence-gray-900;
+  }
+}
+
+@layer components {
+  .eminence-container {
+    @apply max-w-container mx-auto px-6 md:px-10;
+  }
+
+  .eminence-label {
+    @apply text-xs md:text-sm tracking-widest2 uppercase text-eminence-green font-medium;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center px-7 py-3.5 bg-eminence-black text-white text-sm font-medium tracking-wide hover:bg-eminence-green transition-colors duration-300;
+  }
+
+  .btn-secondary {
+    @apply inline-flex items-center gap-2 text-sm font-medium text-eminence-black border-b border-eminence-black/30 hover:border-eminence-green hover:text-eminence-green transition-colors duration-300 pb-0.5;
+  }
+}
