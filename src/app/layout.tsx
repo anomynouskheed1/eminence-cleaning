@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Manrope } from "next/font/google";
 import "./globals.css";
-import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -38,7 +37,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${jakarta.variable} ${manrope.variable} font-body antialiased bg-white text-eminence-black`}>
         {children}
-        <WhatsAppFloat />
       </body>
     </html>
   );
