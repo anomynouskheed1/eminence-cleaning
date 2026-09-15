@@ -10,7 +10,7 @@ const steps = [
 
 export default function ProcessAndTestimonial() {
     return (
-        <section className="py-20 md:py-28">
+        <section className="py-20 md:py-28 bg-eminence-ivory">
             <div className="eminence-container grid grid-cols-1 lg:grid-cols-2 gap-14">
                 <RevealOnScroll>
                     <div>
@@ -21,7 +21,7 @@ export default function ProcessAndTestimonial() {
                         <div className="grid grid-cols-2 gap-8">
                             {steps.map((s) => (
                                 <div key={s.step}>
-                                    <span className="w-8 h-8 rounded-full bg-eminence-green text-white text-xs font-medium flex items-center justify-center mb-4">
+                                    <span className="w-8 h-8 rounded-full bg-eminence-gold text-white text-xs font-medium flex items-center justify-center mb-4">
                                         {s.step}
                                     </span>
                                     <h3 className="font-heading font-semibold text-eminence-black text-sm mb-1.5">

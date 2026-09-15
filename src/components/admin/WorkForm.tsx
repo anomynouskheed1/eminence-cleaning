@@ -4,15 +4,16 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase-browser";
 import ImageUpload from "./ImageUpload";
+import { workCategories } from "@/data/work";
 
 interface ExistingWork {
     id: string;
     title: string;
     slug: string;
     category: string;
-    cover_image: string;
-    gallery_images: string[];
-    description: string;
+    before_image: string | null;
+    after_image: string;
+    description: string | null;
     location: string | null;
     published: boolean;
 }
@@ -28,47 +29,90 @@ export default function WorkForm({ existingWork }: WorkFormProps) {
 
     const [title, setTitle] = useState(existingWork?.title ?? "");
     const [slug, setSlug] = useState(existingWork?.slug ?? "");
-    const [category, setCategory] = useState(existingWork?.category ?? "");
-    const [coverImage, setCoverImage] = useState(existingWork?.cover_image ?? "");
-    const [galleryImages, setGalleryImages] = useState<string[]>(existingWork?.gallery_images ?? []);
-    const [description, setDescription] = useState(existingWork?.description ?? "");
-    const [location, setLocation] = useState(existingWork?.location ?? "");
-    const [published, setPublished] = useState(existingWork?.published ?? true);
+    const [category, setCategory] = useState(
+        existingWork?.category ?? workCategories[1]
+    );
+    const [beforeImage, setBeforeImage] = useState(
+        existingWork?.before_image ?? ""
+    );
+    const [afterImage, setAfterImage] = useState(
+        existingWork?.after_image ?? ""
+    );
+    const [description, setDescription] = useState(
+        existingWork?.description ?? ""
+    );
+    const [location, setLocation] = useState(
+        existingWork?.location ?? ""
+    );
+    const [published, setPublished] = useState(
+        existingWork?.published ?? true
+    );
 
     const [saving, setSaving] = useState(false);
     const [error, setError] = useState("");
 
-    const updateGalleryItem = (index: number, url: string) => {
-        const next = [...galleryImages];
-        next[index] = url;
-        setGalleryImages(next);
-    };
-
-    const removeGalleryItem = (index: number) => {
-        setGalleryImages(galleryImages.filter((_, i) => i !== index));
-    };
-
-    const addGalleryItem = () => setGalleryImages([...galleryImages, ""]);
-
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
+
+        if (!title.trim()) {
+            setError("Title is required.");
+            return;
+        }
+
+        if (!slug.trim()) {
+            setError("Slug is required.");
+            return;
+        }
+
+        if (!category) {
+            setError("Category is required.");
+            return;
+        }
+
+        if (!afterImage.trim()) {
+            setError("An 'After' image is required.");
+            return;
+        }
+
+        if (!description.trim()) {
+            setError("Description is required.");
+            return;
+        }
+
         setSaving(true);
 
         const payload = {
-            title,
-            slug,
+            title: title.trim(),
+            slug: slug
+                .trim()
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, "-")
+                .replace(/^-+|-+$/g, ""),
             category,
-            cover_image: coverImage,
-            gallery_images: galleryImages.filter((g) => g.trim() !== ""),
-            description,
-            location: location.trim() === "" ? null : location,
+            // The After image is used as the main cover image
+            cover_image: afterImage.trim(),
+            before_image:
+                beforeImage.trim() === ""
+                    ? null
+                    : beforeImage.trim(),
+            after_image: afterImage.trim(),
+            description: description.trim(),
+            location:
+                location.trim() === ""
+                    ? null
+                    : location.trim(),
             published,
         };
 
         const { error } = isEditing
-            ? await supabase.from("work_items").update(payload).eq("id", existingWork!.id)
-            : await supabase.from("work_items").insert(payload);
+            ? await supabase
+                .from("work_items")
+                .update(payload)
+                .eq("id", existingWork!.id)
+            : await supabase
+                .from("work_items")
+                .insert(payload);
 
         setSaving(false);
 
@@ -83,128 +127,189 @@ export default function WorkForm({ existingWork }: WorkFormProps) {
 
     const handleDelete = async () => {
         if (!existingWork) return;
-        if (!confirm(`Delete "${existingWork.title}"? This cannot be undone.`)) return;
 
-        const { error } = await supabase.from("work_items").delete().eq("id", existingWork.id);
+        if (
+            !confirm(
+                `Delete "${existingWork.title}"? This cannot be undone.`
+            )
+        ) {
+            return;
+        }
+
+        setError("");
+
+        const { error } = await supabase
+            .from("work_items")
+            .delete()
+            .eq("id", existingWork.id);
+
         if (error) {
             setError(error.message);
             return;
         }
+
         router.push("/admin/work");
         router.refresh();
     };
 
     return (
         <form onSubmit={handleSubmit} className="max-w-3xl space-y-8">
-            <div className="bg-white border border-eminence-gray-200 p-6 space-y-4">
-                <h2 className="font-heading font-semibold text-eminence-black">Basic Info</h2>
+            {/* Basic Information */}
+            <div className="bg-white border border-eminence-gold/15 p-6 space-y-4">
+                <h2 className="font-heading font-semibold text-eminence-black">
+                    Basic Info
+                </h2>
 
+                {/* Title */}
                 <div>
-                    <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">Title</label>
+                    <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">
+                        Title
+                    </label>
+
                     <input
                         type="text"
                         required
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green"
+                        placeholder="e.g. Office Deep Cleaning"
+                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-gold"
                     />
                 </div>
 
+                {/* Slug */}
                 <div>
                     <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">
-                        Slug (used in URL — e.g. corporate-office-cleaning)
+                        Slug (used in URL)
                     </label>
+
                     <input
                         type="text"
                         required
                         value={slug}
                         onChange={(e) => setSlug(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green"
+                        placeholder="e.g. office-deep-cleaning"
+                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-gold"
                     />
+
+                    <p className="mt-1.5 text-[11px] text-eminence-gray-500">
+                        Example: /work/office-deep-cleaning
+                    </p>
                 </div>
 
+                {/* Category */}
                 <div>
                     <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">
-                        Category (e.g. Corporate / Office)
+                        Category
                     </label>
-                    <input
-                        type="text"
+
+                    <select
                         required
                         value={category}
                         onChange={(e) => setCategory(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green"
-                    />
+                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-gold bg-white"
+                    >
+                        {workCategories
+                            .filter((c) => c !== "All")
+                            .map((c) => (
+                                <option key={c} value={c}>
+                                    {c}
+                                </option>
+                            ))}
+                    </select>
                 </div>
 
+                {/* Location */}
                 <div>
                     <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">
                         Location (optional)
                     </label>
+
                     <input
                         type="text"
                         value={location}
                         onChange={(e) => setLocation(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green"
+                        placeholder="e.g. Nairobi, Kenya"
+                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-gold"
                     />
                 </div>
 
+                {/* Description */}
                 <div>
                     <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">
-                        Description (use a blank line between paragraphs)
+                        Description
                     </label>
+
                     <textarea
+                        rows={4}
                         required
-                        rows={6}
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green"
+                        placeholder="Describe the cleaning work carried out..."
+                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-gold"
                     />
                 </div>
-
-                <ImageUpload label="Cover Image" value={coverImage} onChange={setCoverImage} />
             </div>
 
-            <div className="bg-white border border-eminence-gray-200 p-6 space-y-4">
-                <h2 className="font-heading font-semibold text-eminence-black mb-2">Gallery Images</h2>
-                {galleryImages.map((img, i) => (
-                    <div key={i} className="flex items-start gap-3">
-                        <div className="flex-1">
-                            <ImageUpload value={img} onChange={(url) => updateGalleryItem(i, url)} />
-                        </div>
-                        <button
-                            type="button"
-                            onClick={() => removeGalleryItem(i)}
-                            className="text-red-600 hover:text-red-700 text-sm px-2 pt-2"
-                        >
-                            Remove
-                        </button>
-                    </div>
-                ))}
-                <button
-                    type="button"
-                    onClick={addGalleryItem}
-                    className="text-sm text-eminence-green hover:text-eminence-green-dark font-medium"
-                >
-                    + Add Gallery Image
-                </button>
+            {/* Images */}
+            <div className="bg-white border border-eminence-gold/15 p-6 space-y-4">
+                <h2 className="font-heading font-semibold text-eminence-black">
+                    Before / After Images
+                </h2>
+
+                <p className="text-xs text-eminence-gray-600 -mt-2">
+                    The After image is required and will also be used as the
+                    main cover image for this project. Before is optional.
+                </p>
+
+                <ImageUpload
+                    label="Before Image (optional)"
+                    value={beforeImage}
+                    onChange={setBeforeImage}
+                />
+
+                <ImageUpload
+                    label="After Image (required)"
+                    value={afterImage}
+                    onChange={setAfterImage}
+                />
             </div>
 
-            <div className="bg-white border border-eminence-gray-200 p-6">
-                <label className="flex items-center gap-2 text-sm text-eminence-black">
-                    <input type="checkbox" checked={published} onChange={(e) => setPublished(e.target.checked)} />
+            {/* Publishing */}
+            <div className="bg-white border border-eminence-gold/15 p-6">
+                <label className="flex items-center gap-2 text-sm text-eminence-black cursor-pointer">
+                    <input
+                        type="checkbox"
+                        checked={published}
+                        onChange={(e) =>
+                            setPublished(e.target.checked)
+                        }
+                    />
+
                     Published (visible on site)
                 </label>
             </div>
 
-            {error && <p className="text-sm text-red-600">{error}</p>}
+            {/* Error */}
+            {error && (
+                <div className="border border-red-200 bg-red-50 px-4 py-3">
+                    <p className="text-sm text-red-600">
+                        {error}
+                    </p>
+                </div>
+            )}
 
+            {/* Actions */}
             <div className="flex items-center justify-between">
                 <button
                     type="submit"
                     disabled={saving}
-                    className="btn-primary bg-eminence-green hover:bg-eminence-green-dark disabled:opacity-60"
+                    className="btn-gold disabled:opacity-60 disabled:cursor-not-allowed"
                 >
-                    {saving ? "Saving..." : isEditing ? "Save Changes" : "Create Project"}
+                    {saving
+                        ? "Saving..."
+                        : isEditing
+                            ? "Save Changes"
+                            : "Create Project"}
                 </button>
 
                 {isEditing && (

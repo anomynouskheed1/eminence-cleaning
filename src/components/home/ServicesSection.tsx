@@ -14,7 +14,7 @@ export default async function ServicesSection() {
                         <div>
                             <span className="eminence-label block mb-3">Our Services</span>
                             <h2 className="text-3xl md:text-4xl font-heading font-bold text-eminence-black max-w-xl">
-                                Professional Cleaning for Every Space
+                                Residential, Commercial & Industrial Cleaning Solutions
                             </h2>
                         </div>
                         <Link href="/services" className="btn-secondary shrink-0">
@@ -28,7 +28,7 @@ export default async function ServicesSection() {
                         <RevealOnScroll key={service.slug} delay={i * 100}>
                             <Link
                                 href={`/services/${service.slug}`}
-                                className="group block border border-eminence-gray-200 hover:border-eminence-green transition-colors duration-300"
+                                className="group block border border-eminence-gold/15 hover:border-eminence-gold transition-colors duration-300"
                             >
                                 <div className="relative aspect-[4/3] overflow-hidden bg-eminence-gray-100">
                                     <Image
@@ -39,13 +39,13 @@ export default async function ServicesSection() {
                                     />
                                 </div>
                                 <div className="p-5">
-                                    <h3 className="font-heading font-semibold text-eminence-black mb-2 group-hover:text-eminence-green transition-colors">
+                                    <h3 className="font-heading font-semibold text-eminence-black mb-2 group-hover:text-eminence-gold transition-colors">
                                         {service.title}
                                     </h3>
                                     <p className="text-sm text-eminence-gray-600 mb-4 leading-relaxed">
                                         {service.shortDescription}
                                     </p>
-                                    <span className="text-sm font-medium text-eminence-green inline-flex items-center gap-1.5">
+                                    <span className="text-sm font-medium text-eminence-gold inline-flex items-center gap-1.5">
                                         View Service
                                         <span className="transition-transform group-hover:translate-x-1">→</span>
                                     </span>

@@ -1,164 +1,222 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import { getWorkItemBySlug, getRelatedWork, getAllWorkItems } from "@/data/work";
 
-export async function generateStaticParams() {
-    const allWork = await getAllWorkItems();
-    return allWork.map((w) => ({ slug: w.slug }));
-}
+import BeforeAfterCard from "@/components/work/BeforeAfterCard";
+import { getWorkItemBySlug, getAllWorkItems } from "@/data/work";
+export const dynamic = "force-dynamic";
+
+type WorkDetailPageProps = {
+    params: Promise<{
+        slug: string;
+    }>;
+};
+
 
 export async function generateMetadata({
     params,
-}: {
-    params: Promise<{ slug: string }>;
-}) {
+}: WorkDetailPageProps) {
     const { slug } = await params;
     const work = await getWorkItemBySlug(slug);
 
+    console.log("WORK SLUG:", slug);
+    console.log("WORK RESULT:", work);
+
     if (!work) {
-        return { title: "Project Not Found" };
+        return {
+            title: "Project Not Found | Eminence Cleaning Co.",
+        };
     }
 
     return {
-        title: work.title,
-        description: work.description.split("\n\n")[0],
+        title: `${work.title} | Eminence Cleaning Co.`,
+        description:
+            work.description ??
+            `${work.category} project completed by Eminence Cleaning Co.`,
     };
 }
 
 export default async function WorkDetailPage({
     params,
-}: {
-    params: Promise<{ slug: string }>;
-}) {
+}: WorkDetailPageProps) {
     const { slug } = await params;
+
     const work = await getWorkItemBySlug(slug);
 
-    if (!work) notFound();
+    console.log("WORK SLUG:", slug);
+    console.log("WORK RESULT:", work);
 
-    const related = await getRelatedWork(work.slug);
+    if (!work) {
+        notFound();
+    }
+
+    const allWork = await getAllWorkItems();
+
+    const related = allWork
+        .filter((item) => item.slug !== work.slug)
+        .slice(0, 3);
 
     return (
-        <>
-            <Header />
-            <main>
-                {/* HERO */}
-                <section className="relative h-[420px] md:h-[520px] w-full overflow-hidden">
-                    <Image
-                        src={work.coverImage}
-                        alt={work.title}
-                        fill
-                        priority
-                        className="object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-eminence-black/85 via-eminence-black/25 to-transparent" />
+        <div className="bg-eminence-ivory text-eminence-black">
+            {/* PROJECT INTRO */}
+            <section className="py-16 md:py-24">
+                <div className="eminence-container">
+                    <Link
+                        href="/work"
+                        className="mb-8 inline-flex items-center gap-2 text-sm font-medium text-eminence-gray-500 transition-colors hover:text-eminence-gold"
+                    >
+                        <span aria-hidden="true">←</span>
+                        Back to Our Work
+                    </Link>
 
-                    <div className="relative z-10 h-full flex flex-col justify-end eminence-container pb-12 md:pb-16">
-                        <Link
-                            href="/#our-work"
-                            className="text-sm text-white/80 hover:text-white mb-6 inline-flex items-center gap-2 w-fit transition-colors"
-                        >
-                            ← All Work
-                        </Link>
-                        <span className="eminence-label text-white/80 mb-3">{work.category}</span>
-                        <h1 className="text-3xl md:text-5xl font-heading font-bold text-white max-w-2xl">
+                    <div className="max-w-4xl">
+                        <span className="text-xs font-semibold uppercase tracking-[0.2em] text-eminence-gold">
+                            {work.category}
+                        </span>
+
+                        <h1 className="mt-4 text-4xl font-semibold leading-tight tracking-tight md:text-6xl">
                             {work.title}
                         </h1>
+
                         {work.location && (
-                            <p className="text-white/70 text-sm mt-3">{work.location}</p>
+                            <p className="mt-5 text-sm text-eminence-gray-500">
+                                {work.location}
+                            </p>
+                        )}
+
+                        {work.description && (
+                            <p className="mt-6 max-w-3xl text-base leading-8 text-eminence-gray-500 md:text-lg">
+                                {work.description}
+                            </p>
                         )}
                     </div>
-                </section>
+                </div>
+            </section>
 
-                {/* DESCRIPTION */}
-                <section className="py-16 md:py-24">
-                    <div className="eminence-container max-w-3xl">
-                        <span className="eminence-label block mb-4">Overview</span>
-                        <h2 className="text-2xl md:text-3xl font-heading font-bold text-eminence-black mb-6">
-                            About This Project
-                        </h2>
-                        <div className="space-y-4">
-                            {work.description.split("\n\n").map((para: string, i: number) => (
-                                <p key={i} className="text-eminence-gray-600 leading-relaxed">
-                                    {para}
-                                </p>
+            {/* MAIN PROJECT IMAGE */}
+            {work.after && (
+                <section className="pb-16 md:pb-24">
+                    <div className="eminence-container">
+                        <div className="relative aspect-[16/9] w-full overflow-hidden bg-eminence-gray-100">
+                            <Image
+                                src={work.after}
+                                alt={`${work.title} — after`}
+                                fill
+                                priority
+                                className="object-cover"
+                                sizes="(max-width: 768px) 100vw, 1200px"
+                            />
+                        </div>
+                    </div>
+                </section>
+            )}
+
+            {/* BEFORE & AFTER */}
+            {work.before && work.after && (
+                <section className="bg-white py-16 md:py-24">
+                    <div className="eminence-container">
+                        <div className="mb-10 max-w-2xl">
+                            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-eminence-gold">
+                                The Transformation
+                            </span>
+
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+                                Before & After
+                            </h2>
+
+                            <p className="mt-4 text-sm leading-7 text-eminence-gray-500">
+                                Drag across the image to see the difference
+                                made by our professional cleaning team.
+                            </p>
+                        </div>
+
+                        <div className="max-w-4xl">
+                            <BeforeAfterCard item={work} />
+                        </div>
+                    </div>
+                </section>
+            )}
+
+
+
+            {/* BOOKING CTA */}
+            <section className="bg-eminence-black py-16 text-white md:py-20">
+                <div className="eminence-container text-center">
+                    <span className="text-xs font-semibold uppercase tracking-[0.2em] text-eminence-gold">
+                        Need Similar Results?
+                    </span>
+
+                    <h2 className="mx-auto mt-4 max-w-2xl text-3xl font-semibold tracking-tight md:text-5xl">
+                        Let Eminence clean your space.
+                    </h2>
+
+                    <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-white/60 md:text-base">
+                        Professional cleaning services for homes, offices,
+                        commercial spaces and specialized environments.
+                    </p>
+
+                    <Link
+                        href="/contact"
+                        className="mt-8 inline-flex items-center gap-2 bg-eminence-gold px-7 py-4 text-sm font-semibold text-black transition hover:opacity-90"
+                    >
+                        Book a Service
+                        <span aria-hidden="true">→</span>
+                    </Link>
+                </div>
+            </section>
+
+            {/* RELATED WORK */}
+            {related.length > 0 && (
+                <section className="bg-eminence-ivory py-16 md:py-24">
+                    <div className="eminence-container">
+                        <div className="mb-10">
+                            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-eminence-gold">
+                                Explore More
+                            </span>
+
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+                                Related Work
+                            </h2>
+                        </div>
+
+                        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+                            {related.map((item) => (
+                                <Link
+                                    key={item.id}
+                                    href={`/work/${item.slug}`}
+                                    className="group overflow-hidden border border-black/10 bg-white"
+                                >
+                                    <div className="relative aspect-[4/3] overflow-hidden">
+                                        <Image
+                                            src={item.after}
+                                            alt={item.title}
+                                            fill
+                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
+                                            sizes="(max-width: 768px) 100vw, 33vw"
+                                        />
+                                    </div>
+
+                                    <div className="p-5">
+                                        <span className="text-[10px] font-semibold uppercase tracking-[0.15em] text-eminence-gold">
+                                            {item.category}
+                                        </span>
+
+                                        <h3 className="mt-2 text-lg font-semibold transition-colors group-hover:text-eminence-gold">
+                                            {item.title}
+                                        </h3>
+
+                                        {item.location && (
+                                            <p className="mt-2 text-sm text-eminence-gray-500">
+                                                {item.location}
+                                            </p>
+                                        )}
+                                    </div>
+                                </Link>
                             ))}
                         </div>
                     </div>
                 </section>
-
-                {/* GALLERY */}
-                {work.galleryImages.length > 0 && (
-                    <section className="py-16 md:py-24 bg-eminence-gray-50">
-                        <div className="eminence-container">
-                            <span className="eminence-label block mb-4">Gallery</span>
-                            <h2 className="text-2xl md:text-3xl font-heading font-bold text-eminence-black mb-10">
-                                A Closer Look
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {work.galleryImages.map((img: string, i: number) => (
-                                    <div
-                                        key={img}
-                                        className={`relative overflow-hidden bg-eminence-gray-100 ${i === 0 ? "md:col-span-2 aspect-[16/9]" : "aspect-[4/3]"
-                                            }`}
-                                    >
-                                        <Image
-                                            src={img}
-                                            alt={`${work.title} — photo ${i + 1}`}
-                                            fill
-                                            className="object-cover hover:scale-105 transition-transform duration-700"
-                                        />
-                                    </div>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                )}
-
-                {/* RELATED WORK */}
-                {related.length > 0 && (
-                    <section className="py-16 md:py-24">
-                        <div className="eminence-container">
-                            <span className="eminence-label block mb-4">More Work</span>
-                            <h2 className="text-2xl md:text-3xl font-heading font-bold text-eminence-black mb-10">
-                                Other Projects
-                            </h2>
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                                {related.map((r) => (
-                                    <Link key={r.slug} href={`/work/${r.slug}`} className="group relative block aspect-[16/9] overflow-hidden bg-eminence-gray-100">
-                                        <Image
-                                            src={r.coverImage}
-                                            alt={r.title}
-                                            fill
-                                            className="object-cover transition-transform duration-700 group-hover:scale-105"
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-eminence-black/80 via-eminence-black/10 to-transparent" />
-                                        <div className="absolute bottom-0 left-0 p-5">
-                                            <h3 className="font-heading font-semibold text-white mb-1">{r.title}</h3>
-                                            <span className="text-xs text-white/70">{r.category}</span>
-                                        </div>
-                                    </Link>
-                                ))}
-                            </div>
-                        </div>
-                    </section>
-                )}
-
-                {/* CTA back to booking */}
-                <section className="py-16 md:py-24 bg-eminence-gray-50 text-center">
-                    <div className="eminence-container">
-                        <h2 className="text-2xl md:text-3xl font-heading font-bold text-eminence-black mb-6">
-                            Interested in a service like this?
-                        </h2>
-                        <Link href="/#book-a-service" className="btn-primary bg-eminence-green hover:bg-eminence-green-dark">
-                            Book a Service →
-                        </Link>
-                    </div>
-                </section>
-            </main>
-            <Footer />
-        </>
+            )}
+        </div>
     );
 }

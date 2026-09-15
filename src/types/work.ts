@@ -1,11 +1,11 @@
 export interface WorkItem {
     id: string;
     title: string;
-    slug: string;
     category: string;
-    coverImage: string;
-    galleryImages: string[];
-    description: string;
+    slug: string;
+    before?: string; // optional — not every real photo has a matching "before" shot
+    after: string; // the main/showcase image — always required
+    description?: string;
     location?: string;
     published: boolean;
 }

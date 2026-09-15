@@ -5,11 +5,11 @@ function mapRow(row: any): WorkItem {
     return {
         id: row.id,
         title: row.title,
-        slug: row.slug,
         category: row.category,
-        coverImage: row.cover_image,
-        galleryImages: row.gallery_images ?? [],
-        description: row.description,
+        slug: row.slug,
+        before: row.before_image ?? undefined,
+        after: row.after_image,
+        description: row.description ?? undefined,
         location: row.location ?? undefined,
         published: row.published,
     };
@@ -29,29 +29,47 @@ export async function getAllWorkItems(): Promise<WorkItem[]> {
     return data.map(mapRow);
 }
 
-export async function getWorkItemBySlug(slug: string): Promise<WorkItem | undefined> {
+export async function getWorkItemBySlug(
+    slug: string
+): Promise<WorkItem | undefined> {
+    const decodedSlug = decodeURIComponent(slug).trim();
+
     const { data, error } = await supabase
         .from("work_items")
         .select("*")
-        .eq("slug", slug)
+        .eq("slug", decodedSlug)
         .eq("published", true)
         .single();
 
-    if (error || !data) return undefined;
+    if (error || !data) {
+        console.error("Error fetching work item:", error);
+        return undefined;
+    }
+
     return mapRow(data);
 }
 
-export async function getRelatedWork(currentSlug: string, count = 2): Promise<WorkItem[]> {
+export async function getFeaturedWorkItems(count = 4): Promise<WorkItem[]> {
     const { data, error } = await supabase
         .from("work_items")
         .select("*")
         .eq("published", true)
-        .neq("slug", currentSlug)
+        .order("created_at", { ascending: true })
         .limit(count);
 
     if (error) {
-        console.error("Error fetching related work:", error);
+        console.error("Error fetching featured work items:", error);
         return [];
     }
     return data.map(mapRow);
 }
+
+export const workCategories = [
+    "All",
+    "Commercial",
+    "Residential",
+    "Carpet & Upholstery",
+    "Post-Construction",
+    "Outdoor / Facility",
+    "Specialized",
+] as const;

@@ -18,7 +18,7 @@
   }
 
   body {
-    @apply font-body text-eminence-gray-900;
+    @apply font-body text-eminence-gray-900 bg-eminence-ivory;
   }
 }
 
@@ -28,14 +28,18 @@
   }
 
   .eminence-label {
-    @apply text-xs md:text-sm tracking-widest2 uppercase text-eminence-green font-medium;
+    @apply text-xs md:text-sm tracking-widest2 uppercase text-eminence-gold font-medium;
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center px-7 py-3.5 bg-eminence-black text-white text-sm font-medium tracking-wide hover:bg-eminence-green transition-colors duration-300;
+    @apply inline-flex items-center justify-center px-7 py-3.5 bg-eminence-black text-white text-sm font-medium tracking-wide hover:bg-eminence-gold transition-colors duration-300;
   }
 
   .btn-secondary {
-    @apply inline-flex items-center gap-2 text-sm font-medium text-eminence-black border-b border-eminence-black/30 hover:border-eminence-green hover:text-eminence-green transition-colors duration-300 pb-0.5;
+    @apply inline-flex items-center gap-2 text-sm font-medium text-eminence-black border-b border-eminence-black/30 hover:border-eminence-gold hover:text-eminence-gold transition-colors duration-300 pb-0.5;
+  }
+
+  .btn-gold {
+    @apply inline-flex items-center justify-center px-7 py-3.5 bg-eminence-gold text-white text-sm font-medium tracking-wide hover:bg-eminence-gold-dark transition-colors duration-300;
   }
 }

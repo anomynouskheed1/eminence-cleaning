@@ -10,17 +10,23 @@ interface BookServiceFormProps {
 
 const WHATSAPP_NUMBER = "254717803558";
 
-export default function BookServiceForm({ services, defaultService }: BookServiceFormProps) {
+export default function BookServiceForm({
+    services,
+    defaultService,
+}: BookServiceFormProps) {
     const [name, setName] = useState("");
     const [contact, setContact] = useState("");
-    const [selectedService, setSelectedService] = useState(defaultService ?? "");
+    const [selectedService, setSelectedService] = useState(
+        defaultService ?? ""
+    );
     const [location, setLocation] = useState("");
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
 
         const serviceTitle =
-            services.find((s) => s.slug === selectedService)?.title ?? "Not specified";
+            services.find((s) => s.slug === selectedService)?.title ??
+            "Not specified";
 
         const message = `Hello Eminence, I'd like to book a service.
 
@@ -30,73 +36,207 @@ export default function BookServiceForm({ services, defaultService }: BookServic
 *Location:* ${location}`;
 
         const encodedMessage = encodeURIComponent(message);
+
         const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMessage}`;
 
         window.open(url, "_blank");
     };
 
     return (
-        <div className="w-full max-w-sm md:max-w-md bg-white shadow-xl p-7 md:p-9 border border-eminence-gray-200">
-            <span className="eminence-label block mb-1">Get Started</span>
-            <h3 className="text-xl md:text-2xl font-heading font-bold text-eminence-black mb-6">
-                Book a Service
-            </h3>
+        <div
+            className="
+                w-full
+                bg-white
+                border
+                border-eminence-black/10
+                shadow-[0_20px_60px_rgba(0,0,0,0.12)]
+                p-6
+                sm:p-7
+                md:p-8
+            "
+        >
+            {/* Header */}
+            <div className="mb-6">
+                <span className="eminence-label block mb-1.5">
+                    Get Started
+                </span>
 
+                <h3 className="text-2xl md:text-3xl font-heading font-bold text-eminence-black">
+                    Book a Service
+                </h3>
+
+                <p className="mt-2 text-sm leading-relaxed text-eminence-gray-500">
+                    Tell us what you need and our team will get back to you.
+                </p>
+            </div>
+
+            {/* Form */}
             <form className="space-y-4" onSubmit={handleSubmit}>
+
+                {/* Name */}
                 <div>
-                    <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">Full Name</label>
+                    <label
+                        htmlFor="booking-name"
+                        className="block text-xs font-medium text-eminence-gray-600 mb-1.5"
+                    >
+                        Full Name
+                    </label>
+
                     <input
+                        id="booking-name"
                         type="text"
                         required
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green transition-colors"
+                        className="
+                            w-full
+                            border
+                            border-eminence-gray-200
+                            bg-white
+                            px-4
+                            py-3
+                            text-sm
+                            text-eminence-black
+                            placeholder:text-eminence-gray-400
+                            focus:outline-none
+                            focus:border-eminence-gold
+                            focus:ring-1
+                            focus:ring-eminence-gold/20
+                            transition-all
+                        "
                         placeholder="Your name"
                     />
                 </div>
 
+                {/* Contact */}
                 <div>
-                    <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">Phone / Email</label>
+                    <label
+                        htmlFor="booking-contact"
+                        className="block text-xs font-medium text-eminence-gray-600 mb-1.5"
+                    >
+                        Phone / Email
+                    </label>
+
                     <input
+                        id="booking-contact"
                         type="text"
                         required
                         value={contact}
                         onChange={(e) => setContact(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green transition-colors"
+                        className="
+                            w-full
+                            border
+                            border-eminence-gray-200
+                            bg-white
+                            px-4
+                            py-3
+                            text-sm
+                            text-eminence-black
+                            placeholder:text-eminence-gray-400
+                            focus:outline-none
+                            focus:border-eminence-gold
+                            focus:ring-1
+                            focus:ring-eminence-gold/20
+                            transition-all
+                        "
                         placeholder="Phone number or email"
                     />
                 </div>
 
+                {/* Service */}
                 <div>
-                    <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">Service</label>
+                    <label
+                        htmlFor="booking-service"
+                        className="block text-xs font-medium text-eminence-gray-600 mb-1.5"
+                    >
+                        Service
+                    </label>
+
                     <select
+                        id="booking-service"
                         required
                         value={selectedService}
-                        onChange={(e) => setSelectedService(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green transition-colors bg-white"
+                        onChange={(e) =>
+                            setSelectedService(e.target.value)
+                        }
+                        className="
+                            w-full
+                            border
+                            border-eminence-gray-200
+                            bg-white
+                            px-4
+                            py-3
+                            text-sm
+                            text-eminence-black
+                            focus:outline-none
+                            focus:border-eminence-gold
+                            focus:ring-1
+                            focus:ring-eminence-gold/20
+                            transition-all
+                        "
                     >
-                        <option value="">Select a service</option>
-                        {services.map((s) => (
-                            <option key={s.slug} value={s.slug}>
-                                {s.title}
+                        <option value="">
+                            Select a service
+                        </option>
+
+                        {services.map((service) => (
+                            <option
+                                key={service.slug}
+                                value={service.slug}
+                            >
+                                {service.title}
                             </option>
                         ))}
                     </select>
                 </div>
 
+                {/* Location */}
                 <div>
-                    <label className="block text-xs font-medium text-eminence-gray-600 mb-1.5">Location</label>
+                    <label
+                        htmlFor="booking-location"
+                        className="block text-xs font-medium text-eminence-gray-600 mb-1.5"
+                    >
+                        Location
+                    </label>
+
                     <input
+                        id="booking-location"
                         type="text"
                         required
                         value={location}
-                        onChange={(e) => setLocation(e.target.value)}
-                        className="w-full border border-eminence-gray-200 px-4 py-2.5 text-sm focus:outline-none focus:border-eminence-green transition-colors"
+                        onChange={(e) =>
+                            setLocation(e.target.value)
+                        }
+                        className="
+                            w-full
+                            border
+                            border-eminence-gray-200
+                            bg-white
+                            px-4
+                            py-3
+                            text-sm
+                            text-eminence-black
+                            placeholder:text-eminence-gray-400
+                            focus:outline-none
+                            focus:border-eminence-gold
+                            focus:ring-1
+                            focus:ring-eminence-gold/20
+                            transition-all
+                        "
                         placeholder="Area / address"
                     />
                 </div>
 
-                <button type="submit" className="btn-primary w-full bg-eminence-green hover:bg-eminence-green-dark mt-2">
+                {/* Submit */}
+                <button
+                    type="submit"
+                    className="
+                        btn-gold
+                        w-full
+                        mt-2
+                        justify-center
+                    "
+                >
                     Book a Service →
                 </button>
             </form>

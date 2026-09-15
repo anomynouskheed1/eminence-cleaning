@@ -9,25 +9,30 @@ export default async function AdminWorkPage() {
         <div>
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-2xl font-heading font-bold text-eminence-black">Our Work</h1>
-                <Link href="/admin/work/new" className="btn-primary bg-eminence-green hover:bg-eminence-green-dark">
+                <Link href="/admin/work/new" className="btn-gold">
                     + Add Project
                 </Link>
             </div>
 
-            <div className="bg-white border border-eminence-gray-200">
+            <div className="bg-white border border-eminence-gold/15">
                 {workItems.map((item) => (
                     <Link
                         key={item.id}
                         href={`/admin/work/${item.id}`}
-                        className="flex items-center gap-4 p-4 border-b border-eminence-gray-200 last:border-b-0 hover:bg-eminence-gray-50 transition-colors"
+                        className="flex items-center gap-4 p-4 border-b border-eminence-gold/10 last:border-b-0 hover:bg-eminence-ivory transition-colors"
                     >
                         <div className="relative w-16 h-16 shrink-0 bg-eminence-gray-100 overflow-hidden">
-                            <Image src={item.coverImage} alt={item.title} fill className="object-cover" />
+                            <Image src={item.after} alt={item.title} fill className="object-cover" />
                         </div>
                         <div className="flex-1 min-w-0">
                             <p className="font-medium text-eminence-black truncate">{item.title}</p>
                             <p className="text-sm text-eminence-gray-600 truncate">{item.category}</p>
                         </div>
+                        {item.before && (
+                            <span className="text-xs bg-eminence-gold/10 text-eminence-gold px-2 py-1 rounded">
+                                Before/After
+                            </span>
+                        )}
                     </Link>
                 ))}
             </div>

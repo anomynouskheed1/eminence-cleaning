@@ -28,8 +28,9 @@ export default async function ContactPage() {
                                 the form.
                             </p>
                             <div className="space-y-3 text-sm text-eminence-black">
-                                <p>Phone: 0717 803 558</p>
+                                <p>Phone: +254 717 803 558 / +254 771 808 806</p>
                                 <p>Email: info.eminencecleaning@gmail.com</p>
+                                <p>Address: Blessed House, 4th Floor, Suite No. 71, Thika Road, Nairobi</p>
                             </div>
                         </div>
                         <div className="flex justify-center md:justify-end">

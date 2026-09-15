@@ -1,5 +1,5 @@
-// PLACEHOLDER DATA — FOR LAYOUT/PREVIEW PURPOSES ONLY.
-// Replace with real, verified client testimonials before this site goes live.
+import { supabase } from "@/lib/supabase";
+
 export interface Testimonial {
     id: string;
     quote: string;
@@ -8,17 +8,26 @@ export interface Testimonial {
     avatar?: string;
 }
 
-export const testimonials: Testimonial[] = [
-    {
-        id: "placeholder-1",
-        quote: "Professional, reliable, and always thorough. Our space has never looked better.",
-    },
-    {
-        id: "placeholder-2",
-        quote: "The team was punctual and paid attention to details we didn't even ask about.",
-    },
-    {
-        id: "placeholder-3",
-        quote: "Booking was simple and the results were exactly what we needed.",
-    },
-];
+function mapRow(row: any): Testimonial {
+    return {
+        id: row.id,
+        quote: row.quote,
+        author: row.author ?? undefined,
+        role: row.role ?? undefined,
+        avatar: row.avatar ?? undefined,
+    };
+}
+
+export async function getAllTestimonials(): Promise<Testimonial[]> {
+    const { data, error } = await supabase
+        .from("testimonials")
+        .select("*")
+        .eq("published", true)
+        .order("display_order", { ascending: true });
+
+    if (error) {
+        console.error("Error fetching testimonials:", error);
+        return [];
+    }
+    return data.map(mapRow);
+}
