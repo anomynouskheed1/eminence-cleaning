@@ -8,7 +8,7 @@ const clientLogos: Record<string, string> = {
     "mbuzi hq": "/images/clients/mbuzi-hq.png",
     "brainiarchs studios": "/images/clients/brainiarchs-studios.png",
     "thermo expert": "/images/clients/thermo-expert.png",
-    symbion: "/images/clients/Symbion.png",
+
 };
 
 function getClientLogo(
