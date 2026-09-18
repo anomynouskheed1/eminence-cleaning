@@ -52,16 +52,26 @@ const config: Config = {
             letterSpacing: {
                 widest2: "0.2em",
             },
-            animation: {
-                "ping-slow": "ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite",
-                "ping-slower": "ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite 0.6s",
-                marquee: "marquee 30s linear infinite",
-            },
             keyframes: {
                 marquee: {
                     "0%": { transform: "translateX(0%)" },
                     "100%": { transform: "translateX(-50%)" },
                 },
+                "hero-in": {
+                    "0%": { opacity: "0", transform: "translateY(20px)" },
+                    "100%": { opacity: "1", transform: "translateY(0)" },
+                },
+                "header-in": {
+                    "0%": { opacity: "0", transform: "translateY(-16px)" },
+                    "100%": { opacity: "1", transform: "translateY(0)" },
+                },
+            },
+            animation: {
+                "ping-slow": "ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite",
+                "ping-slower": "ping 2.5s cubic-bezier(0, 0, 0.2, 1) infinite 0.6s",
+                marquee: "marquee 30s linear infinite",
+                "hero-in": "hero-in 0.9s cubic-bezier(0.16, 1, 0.3, 1) both",
+                "header-in": "header-in 0.6s cubic-bezier(0.16, 1, 0.3, 1) both",
             },
         },
     },

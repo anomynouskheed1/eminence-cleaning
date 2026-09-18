@@ -9,6 +9,7 @@ const navLinks = [
     { label: "About", href: "/about" },
     { label: "Services", href: "/services" },
     { label: "Our Work", href: "/work" },
+    { label: "Our Team", href: "/team" },
     { label: "Contact", href: "/contact" },
 ];
 
@@ -16,7 +17,7 @@ export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
 
     return (
-        <header className="fixed top-0 left-0 w-full z-50 bg-eminence-ivory border-b border-eminence-black/10">
+        <header className="fixed top-0 left-0 w-full z-50 bg-eminence-ivory border-b border-eminence-black/10 animate-header-in">
             <div className="eminence-container h-20 md:h-24 flex items-center justify-between">
                 {/* =====================================================
             BRAND

@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import HeroSlideshow from "./HeroSlideshow";
 import BookServiceForm from "./BookServiceForm";
+import RevealOnScroll from "@/components/ui/RevealOnScroll";
 import { getAllServices } from "@/data/services";
 
 export default async function HeroAbout() {
@@ -36,7 +37,7 @@ export default async function HeroAbout() {
 
                 {/* Hero content */}
                 <div className="relative z-20 eminence-container h-full flex items-center">
-                    <div className="max-w-2xl pb-16 md:pb-0">
+                    <div className="max-w-2xl pb-16 md:pb-0 animate-hero-in">
 
                         {/* Eyebrow */}
                         <div className="flex items-center gap-3 mb-6">
@@ -120,26 +121,27 @@ export default async function HeroAbout() {
                     {/* =================================================
                         ABOUT — LEFT
                     ================================================= */}
-                    <div
-                        id="about"
-                        className="
+                    <RevealOnScroll>
+                        <div
+                            id="about"
+                            className="
                             scroll-mt-28
                             pt-4
                             md:pt-12
                             pb-10
                             md:pb-16
                         "
-                    >
-                        <div className="max-w-xl">
+                        >
+                            <div className="max-w-xl">
 
-                            {/* Label */}
-                            <span className="eminence-label block mb-4">
-                                About Eminence
-                            </span>
+                                {/* Label */}
+                                <span className="eminence-label block mb-4">
+                                    About Eminence
+                                </span>
 
-                            {/* Heading */}
-                            <h2
-                                className="
+                                {/* Heading */}
+                                <h2
+                                    className="
                                     text-3xl
                                     md:text-4xl
                                     lg:text-5xl
@@ -149,52 +151,55 @@ export default async function HeroAbout() {
                                     mb-6
                                     leading-[1.08]
                                 "
-                            >
-                                A premier cleaning services provider in Kenya
-                            </h2>
+                                >
+                                    A premier cleaning services provider in Kenya
+                                </h2>
 
-                            {/* Description */}
-                            <p className="text-eminence-gray-600 leading-relaxed mb-4 max-w-lg">
-                                Eminence Cleaning Company provides residential,
-                                commercial and industrial cleaning solutions,
-                                built on skilled personnel, smart cleaning
-                                technology and unmatched customer care.
-                            </p>
+                                {/* Description */}
+                                <p className="text-eminence-gray-600 leading-relaxed mb-4 max-w-lg">
+                                    Eminence Cleaning Company provides residential,
+                                    commercial and industrial cleaning solutions,
+                                    built on skilled personnel, smart cleaning
+                                    technology and unmatched customer care.
+                                </p>
 
-                            <p className="text-eminence-gray-600 leading-relaxed mb-8 max-w-lg">
-                                Eminence operates under the Brainiarchs Group,
-                                bringing the same standard of professionalism
-                                and reliability to every space we clean.
-                            </p>
+                                <p className="text-eminence-gray-600 leading-relaxed mb-8 max-w-lg">
+                                    Eminence operates under the Brainiarchs Group,
+                                    bringing the same standard of professionalism
+                                    and reliability to every space we clean.
+                                </p>
 
-                            {/* CTA */}
-                            <Link href="/about" className="btn-secondary">
-                                Know More About Us →
-                            </Link>
+                                {/* CTA */}
+                                <Link href="/about" className="btn-secondary">
+                                    Know More About Us →
+                                </Link>
 
-                            {/* About image */}
-                            <div className="relative mt-10 md:mt-14 w-full max-w-lg aspect-[16/10] overflow-hidden bg-eminence-gray-100">
-                                <Image
-                                    src="/images/about/about-main.jpg"
-                                    alt="Eminence Cleaning Company team at work"
-                                    fill
-                                    className="object-cover"
-                                />
+                                {/* About image */}
+                                <div className="relative mt-10 md:mt-14 w-full max-w-lg aspect-[16/10] overflow-hidden bg-eminence-gray-100">
+                                    <Image
+                                        src="/images/about/about-main.jpg"
+                                        alt="Eminence Cleaning Company team at work"
+                                        fill
+                                        className="object-cover"
+                                    />
 
-                                {/* Gold border */}
-                                <div className="absolute inset-0 border border-eminence-gold/25 pointer-events-none" />
+                                    {/* Gold border */}
+                                    <div className="absolute inset-0 border border-eminence-gold/25 pointer-events-none" />
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    </RevealOnScroll>
 
                     {/* =================================================
                         BOOKING — RIGHT
                     ================================================= */}
-                    <div className="flex justify-center md:justify-end md:-mt-20 lg:-mt-24">
-                        <div className="w-full max-w-md">
-                            <BookServiceForm services={services} />
+                    <RevealOnScroll delay={150}>
+                        <div className="flex justify-center md:justify-end md:-mt-20 lg:-mt-24">
+                            <div className="w-full max-w-md">
+                                <BookServiceForm services={services} />
+                            </div>
                         </div>
-                    </div>
+                    </RevealOnScroll>
 
                 </div>
             </div>
