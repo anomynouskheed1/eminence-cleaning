@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const navLinks = [
     { label: "Home", href: "/" },
@@ -15,9 +15,24 @@ const navLinks = [
 
 export default function Header() {
     const [menuOpen, setMenuOpen] = useState(false);
+    const [scrolled, setScrolled] = useState(false);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrolled(window.scrollY > 60);
+        };
+        handleScroll();
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
     return (
-        <header className="fixed top-0 left-0 w-full z-50 bg-eminence-ivory border-b border-eminence-black/10 animate-header-in">
+        <header
+            className={`fixed top-0 left-0 w-full z-50 animate-header-in transition-all duration-300 ${scrolled
+                    ? "bg-eminence-ivory border-b border-eminence-black/10"
+                    : "bg-transparent border-b border-transparent"
+                }`}
+        >
             <div className="eminence-container h-20 md:h-24 flex items-center justify-between">
                 {/* =====================================================
             BRAND
@@ -40,7 +55,7 @@ export default function Header() {
 
                     <div className="min-w-0">
                         <span
-                            className="
+                            className={`
                 block
                 font-heading
                 text-lg
@@ -48,16 +63,18 @@ export default function Header() {
                 md:text-2xl
                 font-bold
                 tracking-tight
-                text-eminence-black
                 leading-none
                 whitespace-nowrap
-              "
+                transition-colors
+                duration-300
+                ${scrolled ? "text-eminence-black" : "text-white"}
+              `}
                         >
                             Eminence Cleaning Co.
                         </span>
 
                         <span
-                            className="
+                            className={`
                 hidden
                 sm:block
                 mt-1.5
@@ -65,8 +82,10 @@ export default function Header() {
                 md:text-[10px]
                 uppercase
                 tracking-[0.22em]
-                text-eminence-gray-500
-              "
+                transition-colors
+                duration-300
+                ${scrolled ? "text-eminence-gray-500" : "text-white/70"}
+              `}
                         >
                             Where Cleanliness Meets Class
                         </span>
@@ -81,18 +100,18 @@ export default function Header() {
                         <Link
                             key={link.href}
                             href={link.href}
-                            className="
+                            className={`
                 relative
                 py-2
                 text-[14px]
                 lg:text-[15px]
                 font-medium
-                text-eminence-black
                 transition-colors
                 duration-300
                 hover:text-eminence-gold
                 group
-              "
+                ${scrolled ? "text-eminence-black" : "text-white"}
+              `}
                         >
                             {link.label}
 
@@ -121,7 +140,7 @@ export default function Header() {
         ====================================================== */}
                 <button
                     type="button"
-                    className="
+                    className={`
             md:hidden
             relative
             flex
@@ -130,13 +149,12 @@ export default function Header() {
             items-center
             justify-center
             border
-            border-eminence-black/10
             bg-transparent
-            text-eminence-black
             transition-colors
             duration-300
             hover:border-eminence-gold
-          "
+            ${scrolled ? "border-eminence-black/10 text-eminence-black" : "border-white/30 text-white"}
+          `}
                     onClick={() => setMenuOpen((open) => !open)}
                     aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
                     aria-expanded={menuOpen}

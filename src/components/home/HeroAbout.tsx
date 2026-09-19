@@ -14,30 +14,38 @@ export default async function HeroAbout() {
             {/* =========================================================
                 HERO
             ========================================================= */}
-            <div className="relative h-[560px] md:h-[620px] w-full">
+            <div className="relative min-h-[680px] md:min-h-[740px] w-full">
+
+                {/* Hero images */}
                 <HeroSlideshow />
 
-                {/* Dark overlay */}
+                {/* =====================================================
+                    MAIN IMAGE OVERLAY
+                    Darkest behind the text, naturally fading right
+                ===================================================== */}
                 <div
                     className="absolute inset-0 z-10"
                     style={{
                         background:
-                            "linear-gradient(90deg, rgba(10,10,10,0.94) 0%, rgba(10,10,10,0.86) 28%, rgba(10,10,10,0.55) 52%, rgba(10,10,10,0.15) 75%, transparent 100%)",
+                            "linear-gradient(90deg, rgba(8,8,8,0.90) 0%, rgba(8,8,8,0.78) 24%, rgba(8,8,8,0.50) 48%, rgba(8,8,8,0.18) 72%, rgba(8,8,8,0.04) 100%)",
                     }}
                 />
 
-                {/* Gold tint */}
+                {/* Subtle warm/gold atmosphere */}
                 <div
                     className="absolute inset-0 z-10"
                     style={{
                         background:
-                            "linear-gradient(90deg, rgba(184,147,90,0.22) 0%, rgba(184,147,90,0.08) 45%, transparent 75%)",
+                            "linear-gradient(90deg, rgba(143,110,63,0.16) 0%, rgba(143,110,63,0.06) 45%, transparent 75%)",
                     }}
                 />
 
-                {/* Hero content */}
-                <div className="relative z-20 eminence-container h-full flex items-center">
-                    <div className="max-w-2xl pb-16 md:pb-0 animate-hero-in">
+                {/* =====================================================
+                    HERO CONTENT
+                ===================================================== */}
+                <div className="relative z-20 eminence-container min-h-[680px] md:min-h-[740px] flex items-center">
+
+                    <div className="max-w-2xl pt-20 md:pt-16 pb-24 md:pb-20 animate-hero-in">
 
                         {/* Eyebrow */}
                         <div className="flex items-center gap-3 mb-6">
@@ -68,7 +76,10 @@ export default async function HeroAbout() {
 
                         {/* Hero links */}
                         <div className="flex flex-wrap items-center gap-6">
-                            <Link href="#book-a-service" className="btn-gold">
+                            <Link
+                                href="#book-a-service"
+                                className="btn-gold"
+                            >
                                 Book a Service →
                             </Link>
 
@@ -82,12 +93,14 @@ export default async function HeroAbout() {
                     </div>
                 </div>
 
-                {/* Curved hero divider */}
-                <div className="absolute bottom-0 left-0 w-full z-10 leading-[0] pointer-events-none">
+                {/* =====================================================
+                    CURVED HERO → IVORY TRANSITION
+                ===================================================== */}
+                <div className="absolute bottom-0 left-0 w-full z-20 leading-[0] pointer-events-none">
                     <svg
                         viewBox="0 0 1440 120"
                         xmlns="http://www.w3.org/2000/svg"
-                        className="w-full h-[65px] md:h-[90px]"
+                        className="w-full h-[70px] md:h-[100px]"
                         preserveAspectRatio="none"
                     >
                         {/* Gold edge */}
@@ -110,11 +123,7 @@ export default async function HeroAbout() {
             ========================================================= */}
             <div
                 id="book-a-service"
-                className="
-        relative
-        z-30
-        eminence-container
-    "
+                className="relative z-30 eminence-container"
             >
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-16 items-start">
 
@@ -125,37 +134,34 @@ export default async function HeroAbout() {
                         <div
                             id="about"
                             className="
-                            scroll-mt-28
-                            pt-4
-                            md:pt-12
-                            pb-10
-                            md:pb-16
-                        "
+                                scroll-mt-28
+                                pt-4
+                                md:pt-12
+                                pb-10
+                                md:pb-16
+                            "
                         >
                             <div className="max-w-xl">
 
-                                {/* Label */}
                                 <span className="eminence-label block mb-4">
                                     About Eminence
                                 </span>
 
-                                {/* Heading */}
                                 <h2
                                     className="
-                                    text-3xl
-                                    md:text-4xl
-                                    lg:text-5xl
-                                    font-heading
-                                    font-bold
-                                    text-eminence-black
-                                    mb-6
-                                    leading-[1.08]
-                                "
+                                        text-3xl
+                                        md:text-4xl
+                                        lg:text-5xl
+                                        font-heading
+                                        font-bold
+                                        text-eminence-black
+                                        mb-6
+                                        leading-[1.08]
+                                    "
                                 >
                                     A premier cleaning services provider in Kenya
                                 </h2>
 
-                                {/* Description */}
                                 <p className="text-eminence-gray-600 leading-relaxed mb-4 max-w-lg">
                                     Eminence Cleaning Company provides residential,
                                     commercial and industrial cleaning solutions,
@@ -169,21 +175,22 @@ export default async function HeroAbout() {
                                     and reliability to every space we clean.
                                 </p>
 
-                                {/* CTA */}
-                                <Link href="/about" className="btn-secondary">
+                                <Link
+                                    href="/about"
+                                    className="btn-secondary"
+                                >
                                     Know More About Us →
                                 </Link>
 
-                                {/* About image */}
                                 <div className="relative mt-10 md:mt-14 w-full max-w-lg aspect-[16/10] overflow-hidden bg-eminence-gray-100">
                                     <Image
                                         src="/images/about/about-main.jpg"
                                         alt="Eminence Cleaning Company team at work"
                                         fill
+                                        sizes="(max-width: 768px) 100vw, 512px"
                                         className="object-cover"
                                     />
 
-                                    {/* Gold border */}
                                     <div className="absolute inset-0 border border-eminence-gold/25 pointer-events-none" />
                                 </div>
                             </div>
