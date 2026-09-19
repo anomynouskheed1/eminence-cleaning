@@ -5,6 +5,7 @@ import Footer from "@/components/layout/Footer";
 
 import { createClient } from "@/lib/supabase-server";
 
+export const revalidate = 60;
 type WorkItem = {
     id: string;
     title: string;

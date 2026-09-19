@@ -4,6 +4,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { getAllServices } from "@/data/services";
 
+export const revalidate = 60;
 export const metadata = {
     title: "Our Services",
     description:

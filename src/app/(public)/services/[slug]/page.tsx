@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import BookServiceForm from "@/components/home/BookServiceForm";
 import { getServiceBySlug, getRelatedServices, getAllServices } from "@/data/services";
 
+export const revalidate = 60;
 export async function generateStaticParams() {
     const allServices = await getAllServices();
     return allServices.map((s) => ({ slug: s.slug }));

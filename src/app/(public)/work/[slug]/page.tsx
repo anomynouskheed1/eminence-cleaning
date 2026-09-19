@@ -7,7 +7,8 @@ import Footer from "@/components/layout/Footer";
 import BeforeAfterCard from "@/components/work/BeforeAfterCard";
 import { getWorkItemBySlug, getAllWorkItems } from "@/data/work";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
+
 
 type WorkDetailPageProps = {
     params: Promise<{
