@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 import { getAllServices } from "@/data/services";
 import { getAllWorkItems } from "@/data/work";
 
-const BASE_URL = "https://your-domain-here.com"; // update to your actual live domain
+const BASE_URL = "https://eminencecleanin.com"; // update to your actual live domain
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     const services = await getAllServices();

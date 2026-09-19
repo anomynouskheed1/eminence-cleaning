@@ -6,7 +6,7 @@ export default function LocalBusinessSchema() {
         alternateName: "Eminence Cleaning Co.",
         description:
             "Premier cleaning services provider in Kenya offering residential, commercial and industrial cleaning solutions.",
-        url: "https://your-domain-here.com",
+        url: "https://eminencecleanin.com",
         telephone: "+254717803558",
         email: "info.eminencecleaning@gmail.com",
         address: {

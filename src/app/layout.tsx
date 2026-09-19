@@ -15,7 +15,7 @@ const manrope = Manrope({
   display: "swap",
 });
 export const metadata: Metadata = {
-  metadataBase: new URL("https://your-domain-here.com"),
+  metadataBase: new URL("https://eminencecleanin.com"),
   title: {
     default: "Eminence Cleaning Company | Where Cleanliness Meets Class",
     template: "%s | Eminence Cleaning Company",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_KE",
-    url: "https://your-domain-here.com",
+    url: "https://eminencecleanin.com",
     siteName: "Eminence Cleaning Company",
     title: "Eminence Cleaning Company | Where Cleanliness Meets Class",
     description:

@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const BASE_URL = "https://your-domain-here.com"; // same domain as sitemap.ts
+const BASE_URL = "https://eminencecleanin.com"; // same domain as sitemap.ts
 
 export default function robots(): MetadataRoute.Robots {
     return {
