@@ -29,20 +29,20 @@ export default function Header() {
     return (
         <header
             className={`fixed top-0 left-0 w-full z-50 animate-header-in transition-all duration-300 ${scrolled
-                    ? "bg-eminence-ivory border-b border-eminence-black/10"
-                    : "bg-transparent border-b border-transparent"
+                ? "bg-eminence-ivory border-b border-eminence-black/10"
+                : "bg-transparent border-b border-transparent"
                 }`}
         >
-            <div className="eminence-container h-20 md:h-24 flex items-center justify-between">
+            <div className="eminence-container h-16 sm:h-20 md:h-24 flex items-center justify-between gap-3">
                 {/* =====================================================
             BRAND
         ====================================================== */}
                 <Link
                     href="/"
-                    className="flex items-center gap-3 md:gap-4 min-w-0 group"
+                    className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0 flex-1 group"
                     onClick={() => setMenuOpen(false)}
                 >
-                    <div className="relative h-10 w-10 md:h-12 md:w-12 shrink-0 overflow-hidden">
+                    <div className="relative h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 shrink-0 overflow-hidden">
                         <Image
                             src="/images/logo/logo.jpg"
                             alt="Eminence Cleaning Company"
@@ -53,18 +53,18 @@ export default function Header() {
                         />
                     </div>
 
-                    <div className="min-w-0">
+                    <div className="min-w-0 flex-1">
                         <span
                             className={`
                 block
                 font-heading
-                text-lg
-                sm:text-xl
+                text-sm
+                sm:text-lg
                 md:text-2xl
                 font-bold
                 tracking-tight
                 leading-none
-                whitespace-nowrap
+                truncate
                 transition-colors
                 duration-300
                 ${scrolled ? "text-eminence-black" : "text-white"}
@@ -82,6 +82,7 @@ export default function Header() {
                 md:text-[10px]
                 uppercase
                 tracking-[0.22em]
+                truncate
                 transition-colors
                 duration-300
                 ${scrolled ? "text-eminence-gray-500" : "text-white/70"}
@@ -95,7 +96,7 @@ export default function Header() {
                 {/* =====================================================
             DESKTOP NAVIGATION
         ====================================================== */}
-                <nav className="hidden md:flex items-center gap-8 lg:gap-10">
+                <nav className="hidden md:flex items-center gap-8 lg:gap-10 shrink-0">
                     {navLinks.map((link) => (
                         <Link
                             key={link.href}
@@ -144,8 +145,11 @@ export default function Header() {
             md:hidden
             relative
             flex
-            h-11
-            w-11
+            h-9
+            w-9
+            sm:h-11
+            sm:w-11
+            shrink-0
             items-center
             justify-center
             border
@@ -159,7 +163,7 @@ export default function Header() {
                     aria-label={menuOpen ? "Close navigation menu" : "Open navigation menu"}
                     aria-expanded={menuOpen}
                 >
-                    <span className="relative block h-5 w-6">
+                    <span className="relative block h-4 w-5 sm:h-5 sm:w-6">
                         {/* Top */}
                         <span
                             className={`
@@ -168,11 +172,11 @@ export default function Header() {
                 top-0
                 block
                 h-[1.5px]
-                w-6
+                w-full
                 bg-current
                 transition-all
                 duration-300
-                ${menuOpen ? "top-2 rotate-45" : ""}
+                ${menuOpen ? "top-1.5 sm:top-2 rotate-45" : ""}
               `}
                         />
 
@@ -181,10 +185,11 @@ export default function Header() {
                             className={`
                 absolute
                 left-0
-                top-2
+                top-1.5
+                sm:top-2
                 block
                 h-[1.5px]
-                w-6
+                w-full
                 bg-current
                 transition-all
                 duration-300
@@ -197,14 +202,15 @@ export default function Header() {
                             className={`
                 absolute
                 left-0
-                top-4
+                top-3
+                sm:top-4
                 block
                 h-[1.5px]
-                w-6
+                w-full
                 bg-current
                 transition-all
                 duration-300
-                ${menuOpen ? "top-2 -rotate-45" : ""}
+                ${menuOpen ? "top-1.5 sm:top-2 -rotate-45" : ""}
               `}
                         />
                     </span>
