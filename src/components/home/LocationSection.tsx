@@ -97,10 +97,11 @@ export default function LocationSection() {
                                 </span>
 
                                 <a
-                                    href="mailto:info.eminencecleaning@gmail.com"
-                                    className="text-sm text-eminence-black hover:text-eminence-gold transition-colors break-all"
+
+                                    href="mailto:info@eminencecleanin.com"
+                                    className="text-eminence-black hover:text-eminence-gold transition-colors"
                                 >
-                                    info.eminencecleaning@gmail.com
+                                    info@eminencecleanin.com
                                 </a>
                             </div>
 

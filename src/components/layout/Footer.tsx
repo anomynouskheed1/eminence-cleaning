@@ -73,7 +73,7 @@ export default async function Footer() {
                         <li>Thika Road, opposite Garden City Mall</li>
                         <li>Nairobi, Kenya</li>
                         <li><a href="tel:+254717803558" className="hover:text-eminence-gold transition-colors">+254 717 803 558</a></li>
-                        <li><a href="mailto:info.eminencecleaning@gmail.com" className="hover:text-eminence-gold transition-colors">info.eminencecleaning@gmail.com</a></li>
+                        <li><a href="mailto:info@eminencecleanin.com" className="hover:text-eminence-gold transition-colors">info@eminencecleanin.com</a></li>
                     </ul>
 
                     <div className="flex gap-3 mt-6">

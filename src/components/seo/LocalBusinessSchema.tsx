@@ -8,7 +8,7 @@ export default function LocalBusinessSchema() {
             "Premier cleaning services provider in Kenya offering residential, commercial and industrial cleaning solutions.",
         url: "https://eminencecleanin.com",
         telephone: "+254717803558",
-        email: "info.eminencecleaning@gmail.com",
+        email: "info@eminencecleanin.com",
         address: {
             "@type": "PostalAddress",
             streetAddress: "Blessed House, 4th Floor, Suite No. 71, Thika Road, opposite Garden City Mall",
