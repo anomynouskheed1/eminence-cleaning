@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans, Manrope } from "next/font/google";
 import "./globals.css";
 import LocalBusinessSchema from "@/components/seo/LocalBusinessSchema";
+import { Analytics } from "@vercel/analytics/next"
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
@@ -29,11 +30,7 @@ export const metadata: Metadata = {
     "commercial cleaning company Kenya",
     "fumigation services Nairobi",
   ],
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+
   openGraph: {
     type: "website",
     locale: "en_KE",
@@ -55,6 +52,7 @@ export default function RootLayout({
       <body className={`${jakarta.variable} ${manrope.variable} font-body antialiased bg-white text-eminence-black`}>
         <LocalBusinessSchema />
         {children}
+        <Analytics />
       </body>
     </html>
   );
