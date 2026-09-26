@@ -43,7 +43,7 @@ ${data.photos.length > 0 ? data.photos.join("\n") : ""}
 
         // 1. Notify Eminence's team — always sent
         await resend.emails.send({
-            from: "Eminence Website <onboarding@resend.dev>",
+            from: "Eminence Website <quotes@eminencecleanin.com>",
             to: "info@eminencecleanin.com",
             subject: `New Quote Request from ${data.fullName}`,
             text: summary,
@@ -52,7 +52,7 @@ ${data.photos.length > 0 ? data.photos.join("\n") : ""}
         // 2. Auto-confirmation to the customer — only if they provided an email
         if (data.email) {
             await resend.emails.send({
-                from: "Eminence Cleaning Company <onboarding@resend.dev>",
+                from: "Eminence Cleaning Company <quotes@eminencecleanin.com>",
                 to: data.email,
                 subject: "We've received your quote request",
                 html: `
