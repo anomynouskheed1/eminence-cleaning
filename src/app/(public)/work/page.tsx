@@ -2,6 +2,8 @@ import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
+import VideoCard from "@/components/work/VideoCard";
+import { getAllVideos } from "@/data/videos";
 
 import { createClient } from "@/lib/supabase-server";
 
@@ -42,6 +44,7 @@ export default async function WorkPage() {
     }
 
     const items: WorkItem[] = workItems ?? [];
+    const videos = await getAllVideos();
 
     return (
         <>
@@ -172,6 +175,32 @@ export default async function WorkPage() {
                         </div>
                     )}
                 </section>
+
+                {/* VIDEO SHOWCASE */}
+                {videos.length > 0 && (
+                    <section className="eminence-container py-16 md:py-24 border-t border-black/10">
+                        <div className="mb-10">
+                            <span className="text-xs font-semibold uppercase tracking-[0.2em] text-[#9a762d]">
+                                Video Showcase
+                            </span>
+                            <h2 className="mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
+                                See Our Work In Action
+                            </h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {videos.map((video) => (
+                                <VideoCard
+                                    key={video.id}
+                                    title={video.title}
+                                    category={video.category}
+                                    videoUrl={video.videoUrl}
+                                    poster={video.poster}
+                                    caption={video.caption}
+                                />
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* CTA */}
                 <section className="border-t border-black/10 bg-black text-white">
