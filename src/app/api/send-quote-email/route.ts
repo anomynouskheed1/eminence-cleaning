@@ -41,12 +41,46 @@ Photos uploaded: ${data.photos.length}
 ${data.photos.length > 0 ? data.photos.join("\n") : ""}
     `.trim();
 
+        // 1. Notify Eminence's team — always sent
         await resend.emails.send({
             from: "Eminence Website <onboarding@resend.dev>",
             to: "info@eminencecleanin.com",
             subject: `New Quote Request from ${data.fullName}`,
             text: summary,
         });
+
+        // 2. Auto-confirmation to the customer — only if they provided an email
+        if (data.email) {
+            await resend.emails.send({
+                from: "Eminence Cleaning Company <onboarding@resend.dev>",
+                to: data.email,
+                subject: "We've received your quote request",
+                html: `
+          <div style="font-family: Arial, sans-serif; max-width: 500px; margin: 0 auto; color: #0A0A0A;">
+            <h2 style="color: #0A0A0A;">Hi ${data.fullName.split(" ")[0]},</h2>
+            <p style="line-height: 1.6; color: #5C5C58;">
+              Thank you for reaching out to <strong>Eminence Cleaning Company</strong>.
+              We've received your quote request for <strong>${data.services.join(", ") || "your cleaning service"}</strong>
+              at <strong>${data.location}</strong>.
+            </p>
+            <p style="line-height: 1.6; color: #5C5C58;">
+              This is a quote request, not a confirmed booking. Our team will review the
+              details you provided and get in touch with you via
+              <strong>${data.preferredContact}</strong> to discuss pricing and scheduling.
+            </p>
+            <p style="line-height: 1.6; color: #5C5C58;">
+              If you need to reach us sooner, feel free to message us directly on
+              WhatsApp at <a href="https://wa.me/254717803558" style="color: #B8935A;">+254 717 803 558</a>.
+            </p>
+            <p style="margin-top: 32px; color: #5C5C58;">
+              Warm regards,<br/>
+              <strong style="color: #0A0A0A;">Eminence Cleaning Company</strong><br/>
+              <span style="font-size: 12px; color: #8F6E3F;">Where Cleanliness Meets Class</span>
+            </p>
+          </div>
+        `,
+            });
+        }
 
         return NextResponse.json({ success: true });
     } catch (error) {
