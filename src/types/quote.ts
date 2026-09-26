@@ -1,0 +1,63 @@
+export interface QuoteFormData {
+    intent: string;
+    fullName: string;
+    whatsapp: string;
+    email: string;
+    preferredContact: string;
+    existingCustomer: string;
+    customerType: string;
+    propertyType: string;
+    location: string;
+    postalCode: string;
+    propertySize: string;
+    bedrooms: string;
+    bathrooms: string;
+    services: string[];
+    addOns: string[];
+    condition: string;
+    challenges: string[];
+    frequency: string;
+    photos: string[];
+    preferredDate: string;
+    preferredTime: string;
+    alternativeDate: string;
+    flexibility: string;
+    urgency: string;
+    contactPerson: string;
+    accessDetails: string;
+    pets: string;
+    notes: string;
+    agreedToTerms: boolean;
+}
+
+export const initialQuoteData: QuoteFormData = {
+    intent: "",
+    fullName: "",
+    whatsapp: "",
+    email: "",
+    preferredContact: "",
+    existingCustomer: "",
+    customerType: "",
+    propertyType: "",
+    location: "",
+    postalCode: "",
+    propertySize: "",
+    bedrooms: "",
+    bathrooms: "",
+    services: [],
+    addOns: [],
+    condition: "",
+    challenges: [],
+    frequency: "",
+    photos: [],
+    preferredDate: "",
+    preferredTime: "",
+    alternativeDate: "",
+    flexibility: "",
+    urgency: "",
+    contactPerson: "",
+    accessDetails: "",
+    pets: "",
+    notes: "",
+    agreedToTerms: false,
+};

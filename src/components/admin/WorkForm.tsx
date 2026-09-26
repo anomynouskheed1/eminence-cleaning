@@ -265,12 +265,14 @@ export default function WorkForm({ existingWork }: WorkFormProps) {
                     label="Before Image (optional)"
                     value={beforeImage}
                     onChange={setBeforeImage}
+                    watermark
                 />
 
                 <ImageUpload
                     label="After Image (required)"
                     value={afterImage}
                     onChange={setAfterImage}
+                    watermark
                 />
             </div>
 

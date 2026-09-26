@@ -1,5 +1,4 @@
-import WhatsAppFloat from "@/components/ui/WhatsAppFloat";
-
+import FloatingActions from "@/components/quote/FloatingActions";
 export default function PublicLayout({
     children,
 }: {
@@ -8,7 +7,7 @@ export default function PublicLayout({
     return (
         <>
             {children}
-            <WhatsAppFloat />
+            <FloatingActions />
         </>
     );
 }
