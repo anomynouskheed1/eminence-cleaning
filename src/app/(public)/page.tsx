@@ -10,6 +10,8 @@ import ProcessAndTestimonial from "@/components/home/ProcessAndTestimonial";
 import LocationSection from "@/components/home/LocationSection";
 import FinalCTA from "@/components/home/FinalCTA";
 
+export const revalidate = 60;
+
 export default async function Home() {
   return (
     <>
